@@ -2,17 +2,25 @@
 from django.http import HttpResponse
 from django.utils import timezone
 from django.views import View
+from django.shortcuts import get_object_or_404, render
 from polls.models import Question
+
 
 def index(request):
     """temp Doc String"""
     latest_question_list = Question.objects.order_by('-pub_date')[:5]
-    ouput = ', '.join([q.question_text for q in latest_question_list])
-    return HttpResponse("Latest Polls \n {}".format(ouput))
+    context = {
+        'latest_question_list': latest_question_list,
+    }
+    return render(request, 'polls/index.html', context)
 
 def detail(request, question_id):
     """temp Doc String"""
-    return HttpResponse("you are looking at Questiion {}".format(question_id))
+    question = get_object_or_404(Question, pk=question_id)
+    context = {
+        'question': question,
+    }
+    return render(request, 'polls/detail.html', context)
 
 def results(request, question_id):
     """temp Doc String"""
