@@ -7,7 +7,6 @@ from django.shortcuts import get_object_or_404, render
 from polls.models import Question, Choice
 
 
-
 class IndexView(generic.ListView):
     """temp Doc String"""
     template_name = 'polls/index.html'
@@ -15,6 +14,7 @@ class IndexView(generic.ListView):
 
     def get_queryset(self):
         return Question.objects.order_by('-pub_date')[:5]
+
 
 class DetailView(generic.DetailView):
     """temp Doc String"""
@@ -27,6 +27,7 @@ class ResultsView(generic.DetailView):
     model = Question
     template_name = 'polls/results.html'
 
+
 def vote(request, question_id):
     """temp Doc String"""
     question = get_object_or_404(Question, pk=question_id)
@@ -34,14 +35,17 @@ def vote(request, question_id):
         selected_choice = question.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         return render(request, 'polls/detail.html', {
-            'question' : question,
+            'question': question,
             'error_message': "You didn't select a choice.",
         })
     else:
         selected_choice.votes += 1
         selected_choice.save()
+        revrs = reverse('polls:results', args=(question.id,))
+        reponse = HttpResponseRedirect(revrs)
 
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+        return reponse
+
 
 class ShowTimeView(View):
     """temp Doc String"""
