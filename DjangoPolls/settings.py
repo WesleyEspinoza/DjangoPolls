@@ -25,7 +25,7 @@ SECRET_KEY = '-g73r97zm-$0s3pz&uhkft8_=)j2gr&6xpow^&$334bd9$tn*6'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', 'memepolls.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
