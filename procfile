@@ -1,1 +1,1 @@
-web: gunicorn DjangoPolls.wsgi --log-file -
+web: gunicorn MemePolls.wsgi --log-file -
